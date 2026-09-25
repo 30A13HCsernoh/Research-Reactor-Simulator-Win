@@ -11,6 +11,7 @@ J. Malec, D. Toškan, and L. Snoj, [‘PC-based JSI research reactor simulator�
 ## Building instruction
 The project source code is located in the "nanogui" folder.
 Use "cmake" to create build configuration in any folder.
+- Clone with --recursive
 
 On Ubuntu Linux, the following set of commands should build Research Reactor simulator:
 ```
