@@ -1,4 +1,5 @@
 rebuilt glad from site with same settings and replaced
-include/periodical mode created #define M_PI
-build/simulatorgui.rc/resource1.h are now UTF8
-src/simulatorgui //comment out line 418
+include/PeriodicalMode.h #define M_PI
+include/PeriodicalMode.h include cstddef, cstdint
+build/SimulatorGUI.rc, build/resource1.h are now UTF8
+src/SimulatorGUI.cpp comment out line 418
