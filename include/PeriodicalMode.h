@@ -1,4 +1,10 @@
 #pragma once
+
+#include <cstddef>
+#include <cstdint>
+
+#define M_PI 3.14159265358979323846
+
 enum SimulationModes : std::uint8_t {
 	None,
 	SquareWaveMode,

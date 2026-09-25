@@ -1,0 +1,4 @@
+rebuilt glad from site with same settings and replaced
+include/periodical mode created #define M_PI
+build/simulatorgui.rc/resource1.h are now UTF8
+src/simulatorgui //comment out line 418

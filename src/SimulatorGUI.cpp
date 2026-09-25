@@ -1,5 +1,5 @@
 ﻿/*
-	SimulatorGUI.cpp draws the main 
+	SimulatorGUI.cpp draws the main
 	GUI screen
 */
 #define NOMINMAX
@@ -415,7 +415,7 @@ public:
 			msg->setPosition(Vector2i((this->size().x() - msg->size().x()) / 2, (this->size().y() - msg->size().y()) / 2));
 			msg->setCallback([this, msg](int /*choice*/) {
 				toggleBaseWindow(true);
-				msg->dispose();
+				//msg->dispose(); this crashes
 			});
 		});
 	}
@@ -427,10 +427,10 @@ public:
 		endIdx = reactor->getIndexFromTime(reactor->time_[lastPulseData.pulseStartIndex] + pulseTimer->value(1) * 5);
 
 		double timeLimits[2] = { reactor->time_[startIdx], reactor->time_[endIdx] };
-		
+
 		for (int i = 0; i < 4; i++) {
 			pulsePlots[i]->setPlotRange(startIdx, endIdx);
-			if (i == 3) { 
+			if (i == 3) {
 				pair<int, int> orders = recalculatePowerExtremes(timeLimits[0], timeLimits[1]);
 				pulsePlots[i]->setLimits(timeLimits[0], timeLimits[1], 0., std::pow(10., orders.second));
 				bool maxVisible = (lastPulseData.timeAtMax >= timeLimits[0]) || (lastPulseData.timeAtMax <= timeLimits[1]);
@@ -816,7 +816,7 @@ public:
 			idx++;
 		}
 		glfwSetWindowIcon(mGLFWWindow, WINDOW_ICON_NUM, icons);
-		
+
 
 		// Initialize the reactor simulator
 		initializeSimulator();
@@ -1179,7 +1179,7 @@ public:
 					return true;
 				});
 			}
-			
+
 		}
 
 		// Checkboxes
@@ -1200,7 +1200,7 @@ public:
 					//cooling->setCaption("disabled");
 				}
 			});
-			
+
 			Widget* checkBoxPanelNeutronSource = main_right->add<Widget>();
 			checkBoxPanelNeutronSource->setLayout(panelsLayout);
 			checkBoxPanelNeutronSource->add<Label>("Neutron source :", "sans-bold");
@@ -1345,7 +1345,7 @@ public:
 			reactivityLimitBox[1]->setValueIncrement(1.f);
 			reactivityLimitBox[1]->setCallback([this](float a) {
 				properties->reactivityGraphLimits[1] = a;
-			}); 
+			});
 			Button* btn = reactivityLimitsPanel->add<Button>("Reset");
 			btn->setCallback([this]() {
 				reactivityLimitBox[0]->setValue(reactor->getExcessReactivity() - reactor->getTotalRodWorth());
@@ -1480,7 +1480,7 @@ public:
 		std::string titles[2] = { "Physics","Neutron source" };
 		//RelativeGridLayout* layouts[2];
 		//Widget* tabs[2];
-		
+
 
 		Widget* physics_settings = modeTabs->createTab("Physics");
 		physics_settings->setId("Physics tab");
@@ -1729,7 +1729,7 @@ public:
 
 		// Core volume
 		Widget* corePanel = settingsVert->add<Widget>();
-		
+
 		corePanel->setLayout(panelsLayout);
 		corePanel->add<Label>("Core volume: ", "sans-bold");
 		coreVolumeBox = corePanel->add<FloatBox<double>>(properties->coreVolume * 1e3);
@@ -1814,7 +1814,7 @@ public:
 			properties->excessReactivity = change;
 			reactor->setExcessReactivity(change);
 		});
-		
+
 		// Water cooling power
 		waterCoolingPowerPanel->add<Label>("Water cooling power: ", "sans-bold");
 		coolingPowerBox = waterCoolingPowerPanel->add<FloatBox<double>>(properties->waterCoolingPower);
@@ -2479,7 +2479,7 @@ public:
 		});
 
 		steadyPowerBox->setCallback([this](double newValue) {
-			if (newValue > 0.) { 
+			if (newValue > 0.) {
 				properties->steadyGoalPower = newValue;
 				reactor->setAutomaticSteadyPower(newValue);
 			}
@@ -2546,7 +2546,7 @@ public:
 			});
 		}
 
-		// Create the period limit 
+		// Create the period limit
 		periodLimBox = limits_tab->add<IntBox<float>>((float)properties->periodLimit);
 		rel->setAnchor(periodLimBox, RelativeGridLayout::makeAnchor(2, 1, 1, 1, Alignment::Fill, Alignment::Middle));
 		periodLimBox->setFixedSize(Vector2i(100, 20));
@@ -2887,7 +2887,7 @@ public:
 
 		performLayout();
 	}
-	
+
 	template<typename WidgetClass, typename... Args>
 	WidgetClass* makeSettingLabel(Widget* parent, std::string text, int fixedWidth = 0, const Args&... args) {
 		Widget* panel = parent->add<Widget>();
@@ -3178,7 +3178,7 @@ public:
 			loadScriptFromFile(startScript);
 			startScript = "";
 		}
-			
+
 		// Run new calculation
 		reactor->runLoop();
 
@@ -3331,10 +3331,10 @@ public:
 			sourceSettings->performLayout(ctx);
 			shouldUpdateNeutronSource = false;
 		}
-		
+
 		/* Draw the user interface */
 		Screen::draw(ctx);
-		
+
 		// Send dickbut PNG bits over serial
 #if defined(_WIN32)
 		if (boxConnected) {
@@ -3345,7 +3345,7 @@ public:
 		}
 #endif
 	}
-	
+
 	double lastData = 0.;
 #if defined(_WIN32)
 	void handleBox() {
@@ -3361,7 +3361,7 @@ public:
 		if (reactor->safetyRod()->isEnabled()) { LEDstatus |= ROD_SAFETY_ENBL; }
 		if (reactor->regulatingRod()->isEnabled()) { LEDstatus |= ROD_REG_ENBL; }
 		if (reactor->shimRod()->isEnabled()) { LEDstatus |= ROD_SHIM_ENBL; }
-		
+
 		if (reactor->safetyRod()->getCommandType() == ControlRod::CommandType::Top || *reactor->safetyRod()->getExactPosition() == (float)*reactor->safetyRod()->getRodSteps()) {
 			LEDstatus |= ROD_SAFETY_UP;
 		}
@@ -3391,7 +3391,7 @@ public:
 		sendByte[2] = LEDstatus & 0x00ff;
 
 		// Write LED data
-		
+
 		theBox->WriteData(sendByte, 3);
 
 		// Reset sounds
@@ -3421,7 +3421,7 @@ public:
 			}
 			return;
 		}
-		
+
 	}
 #endif
 	bool shouldUpdateNeutronSource = false;
@@ -3702,7 +3702,7 @@ public:
 	void loadArchive(std::string path) {
 		properties->restoreArchive(path);
 		toggleBaseWindow(true);
-	}   
+	}
 
 	void loadScriptFromFile(std::string path) {
 		double time0 = reactor->getCurrentTime();
