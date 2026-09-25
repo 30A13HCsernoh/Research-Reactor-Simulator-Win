@@ -12,6 +12,13 @@ J. Malec, D. Toškan, and L. Snoj, [‘PC-based JSI research reactor simulator�
 The project source code is located in the "nanogui" folder.
 Use "cmake" to create build configuration in any folder.
 
+On Ubuntu Linux, the following set of commands should build Research Reactor simulator:
+```
+apt update && apt -y install make git cmake xorg-dev libgl1-mesa-dev g++-multilib
+cd build
+cmake ..
+make
+```
 On Windows with MSYS2, the following set of commands should build Research Reactor simulator:
 ```
 cd build
@@ -21,7 +28,8 @@ mingw32-make
 
 ## Run requirements
 - OpenGL 3.3 or newer
-- C++ redistributable package for VS 2017
+- Windows, Linux and Mac builds have been tested.
+- C++ redistributable package for VS 2017 (Windows only requirement)
 - 400MB RAM
 
 ## Screenshot
